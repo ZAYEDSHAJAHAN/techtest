@@ -18,6 +18,7 @@ num qui = 0;
 int rvalue = 0;
 var boxid = 0;
 int randombox = 0;
+List randomidList = [];
 
 class _secondpageState extends State<secondpage> {
   @override
@@ -71,7 +72,16 @@ class _secondpageState extends State<secondpage> {
                 padding: const EdgeInsets.all(5),
                 child: InkWell(
                   onTap: () {
-                    random(val);
+                    setState(() {
+                      randomidList.add(randombox);
+                    });
+
+                    print(randomidList);
+                    if (randomidList.contains(randombox)) {
+                      random(val);
+                    } else {
+                      random(val);
+                    }
                   },
                   child: Container(
                     height: 12.h,
@@ -97,10 +107,8 @@ class _secondpageState extends State<secondpage> {
                     child: Text(tempid(k, j).toString()),
                   ),
                   onTap: () {
-                    setState(() {
-                      random(val);
-                      myBoxDecoration3();
-                    });
+                    random(val);
+                    myBoxDecoration3();
                   },
                 ),
               ),

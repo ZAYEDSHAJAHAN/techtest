@@ -78,27 +78,31 @@ class _secondpageState extends State<secondpage> {
                 ),
               ),
           ] else ...[
-            Container(
-              height: 12.h,
-              width: 12.h,
-              color: Colors.grey,
-            ),
-            SizedBox(
-              width: 5.w,
-            ),
-            Container(
-              height: 12.h,
-              width: 12.h,
-              color: Colors.grey,
-            ),
-            SizedBox(
-              width: 5.w,
-            ),
-            Container(
-              height: 12.h,
-              width: 12.h,
-              color: Colors.grey,
-            ),
+            for (int j = 0; j < 3; j++)
+              Padding(
+                padding: EdgeInsets.all(1.h),
+                child: Container(
+                  height: 12.h,
+                  width: 12.h,
+                  color: Colors.grey,
+                ),
+              ),
+            // SizedBox(
+            //   width: 5.w,
+            // ),
+            // Container(
+            //   height: 12.h,
+            //   width: 12.h,
+            //   color: Colors.grey,
+            // ),
+            // SizedBox(
+            //   width: 5.w,
+            // ),
+            // Container(
+            //   height: 12.h,
+            //   width: 12.h,
+            //   color: Colors.grey,
+            // ),
           ]
         ],
       ),
@@ -110,4 +114,12 @@ random(val) {
   Random random = new Random();
   int randomNumber = random.nextInt(val);
   return print("random number is " + randomNumber.toString());
+}
+
+BoxDecoration myBoxDecoration2() {
+  return BoxDecoration(color: Colors.blueAccent);
+}
+
+BoxDecoration myBoxDecoration3() {
+  return BoxDecoration(color: Colors.greenAccent);
 }

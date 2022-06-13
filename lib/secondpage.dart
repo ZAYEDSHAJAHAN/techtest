@@ -13,15 +13,29 @@ class secondpage extends StatefulWidget {
 }
 
 int pvalue = 0;
+int remi = 0;
+num qui = 0;
+int rvalue = 0;
+var boxid = 0;
+int randombox = 0;
 
 class _secondpageState extends State<secondpage> {
   @override
   void initState() {
     super.initState();
+
     random(widget.data.val);
     setState(() {
+      remi = widget.data.val % 3;
+      qui = widget.data.val ~/ 3;
       if (widget.data.val < 3) {
         pvalue = widget.data.val - 3;
+      }
+
+      if (remi > 3) {
+        rvalue = remi - 3;
+      } else {
+        rvalue = remi;
       }
     });
   }
@@ -33,47 +47,39 @@ class _secondpageState extends State<secondpage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            for (int i = 0; i < widget.data.val; i++) con(widget.data.val)
+            if (remi == 0) ...[
+              for (int i = 0; i < qui; i++) con(3, 0, i)
+            ] else ...[
+              for (int i = 0; i < qui; i++) con(widget.data.val, rvalue, i),
+              con1(widget.data.val, rvalue)
+            ]
           ],
         ),
       ),
     ));
   }
 
-  // Widget con(val) {
-  //   return Column(children: [
-  //     for (int i = 0; i < 8; i++)
-  //       for (int j = 0; j <= i; j++)
-  //         Padding(
-  //           padding: EdgeInsets.all(2.h),
-  //           child: Container(
-  //             height: 12.h,
-  //             width: 12.h,
-  //             color: Colors.blueAccent,
-  //             child: Text(val.toString()),
-  //           ),
-  //         ),
-  //   ]);
-  // }
-
-  Widget con(val) {
+  Widget con(val, reminvalue, int k) {
+    BoxDecoration h;
     return Padding(
       padding: EdgeInsets.all(2.h),
       child: Row(
         children: [
-          if (val <= 3) ...[
+          if (reminvalue == 0) ...[
             for (int j = 0; j < val; j++)
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: InkWell(
                   onTap: () {
-                    // print(arg);
+                    random(val);
                   },
                   child: Container(
                     height: 12.h,
                     width: 12.h,
-                    color: Colors.grey,
-                    child: Text(val.toString()),
+                    decoration: (randombox == boxid)
+                        ? myBoxDecoration2()
+                        : myBoxDecoration1(),
+                    child: Text(tempid(k, j).toString()),
                   ),
                 ),
               ),
@@ -81,39 +87,73 @@ class _secondpageState extends State<secondpage> {
             for (int j = 0; j < 3; j++)
               Padding(
                 padding: EdgeInsets.all(1.h),
-                child: Container(
-                  height: 12.h,
-                  width: 12.h,
-                  color: Colors.grey,
+                child: InkWell(
+                  child: Container(
+                    height: 12.h,
+                    width: 12.h,
+                    decoration: (randombox == boxid)
+                        ? myBoxDecoration2()
+                        : myBoxDecoration1(),
+                    child: Text(tempid(k, j).toString()),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      random(val);
+                      myBoxDecoration3();
+                    });
+                  },
                 ),
               ),
-            // SizedBox(
-            //   width: 5.w,
-            // ),
-            // Container(
-            //   height: 12.h,
-            //   width: 12.h,
-            //   color: Colors.grey,
-            // ),
-            // SizedBox(
-            //   width: 5.w,
-            // ),
-            // Container(
-            //   height: 12.h,
-            //   width: 12.h,
-            //   color: Colors.grey,
-            // ),
           ]
         ],
       ),
     );
   }
-}
 
-random(val) {
-  Random random = new Random();
-  int randomNumber = random.nextInt(val);
-  return print("random number is " + randomNumber.toString());
+  Widget con1(val, reminvalue) {
+    return Padding(
+      padding: EdgeInsets.all(2.h),
+      child: Row(
+        children: [
+          for (int j = 0; j < reminvalue; j++)
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 12.h,
+                  width: 12.h,
+                  color: Colors.grey,
+                  child: Text(tempidblance(val, reminvalue).toString()),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  tempid(j, k) {
+    // print("k =" + k.toString());
+    // print("j= " + j.toString());
+    int counterid = k + j + (2 * j);
+    // print("counter id= " + counterid.toString());
+    setState(() {
+      boxid = counterid;
+    });
+    return counterid;
+  }
+
+  random(val) {
+    Random random = new Random();
+    int randomNumber = random.nextInt(val - 1);
+
+    print("random number is " + randomNumber.toString());
+    setState(() {
+      randombox = randomNumber;
+    });
+    return randomNumber;
+  }
 }
 
 BoxDecoration myBoxDecoration2() {
@@ -122,4 +162,14 @@ BoxDecoration myBoxDecoration2() {
 
 BoxDecoration myBoxDecoration3() {
   return BoxDecoration(color: Colors.greenAccent);
+}
+
+BoxDecoration myBoxDecoration1() {
+  return BoxDecoration(color: Colors.grey);
+}
+
+tempidblance(passingvalue, balancebox) {
+  print("passingvalue " + passingvalue.toString());
+  print("balancebox " + balancebox.toString());
+  return 0;
 }

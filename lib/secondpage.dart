@@ -19,6 +19,7 @@ int rvalue = 0;
 var boxid = 0;
 int randombox = 0;
 List randomidList = [];
+bool pressAttention = false;
 
 class _secondpageState extends State<secondpage> {
   @override
@@ -74,21 +75,24 @@ class _secondpageState extends State<secondpage> {
                   onTap: () {
                     setState(() {
                       randomidList.add(randombox);
+                      pressAttention = !pressAttention;
                     });
+                    randomering(val);
+                    print(boxid);
 
                     print(randomidList);
-                    if (randomidList.contains(randombox)) {
-                      random(val);
-                    } else {
-                      random(val);
-                    }
                   },
                   child: Container(
                     height: 12.h,
                     width: 12.h,
-                    decoration: (randombox == boxid)
-                        ? myBoxDecoration2()
-                        : myBoxDecoration1(),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 0.4),
+                        color: mycolors()),
+
+                    //  (randombox == boxid)
+                    //     ? myBoxDecoration2()
+                    //     : myBoxDecoration1()
+
                     child: Text(tempid(k, j).toString()),
                   ),
                 ),
@@ -141,6 +145,27 @@ class _secondpageState extends State<secondpage> {
     );
   }
 
+  mycolors() {
+    if (randombox == boxid) {
+      return Colors.blueAccent;
+    } else if (pressAttention == false) {
+      if (randombox == boxid) {
+        return Colors.green;
+      }
+    } else {
+      return Colors.transparent;
+    }
+  }
+
+  randomering(val) {
+    random(val);
+    if (randomidList.contains(randombox)) {
+      randomidList.remove(randombox);
+    } else {
+      return randombox;
+    }
+  }
+
   tempid(j, k) {
     // print("k =" + k.toString());
     // print("j= " + j.toString());
@@ -154,7 +179,7 @@ class _secondpageState extends State<secondpage> {
 
   random(val) {
     Random random = new Random();
-    int randomNumber = random.nextInt(val - 1);
+    int randomNumber = random.nextInt(val);
 
     print("random number is " + randomNumber.toString());
     setState(() {
